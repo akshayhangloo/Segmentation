@@ -12,13 +12,14 @@ var uastring = navigator.userAgent;
 parser.setUA(uastring);
 var result = parser.getResult();
 
-var device;
-alert(result.device.type);
+var d=result.device.type;
+device = d.toString();
+alert(device);
 
-if(result.device.type === "undefined"){
+if(device === "undefined"){
 device = "desktop";
 }  
-else if(result.device.type === "mobile"){
+else if(device === "mobile"){
 device = "mobile";
 }
 else{
