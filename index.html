@@ -13,7 +13,7 @@ parser.setUA(uastring);
 var result = parser.getResult();
 
 var device;
-alert(result.device.type.stringify());
+alert(result.device.type);
 
 if(result.device.type === "undefined"){
 device = "desktop";
