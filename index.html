@@ -46,9 +46,16 @@ return device;
  var segmentName = GetDevice();
   
  window._pcq = window._pcq || [];
+_pcq.push(['APIReady', callbackOnAPIReady]);
 _pcq.push(['subscriptionSuccessCallback',callbackFunctionOnSuccessfulSubscription]);
   //registers callback function to be called when user gets successfully subscribed
 
+function callbackOnAPIReady() {
+    //now api is ready
+    _pcq.push(['addSubscriberToSegment', segmentName, callbackForAddToSegment]);
+}
+
+  
  function callbackFunctionOnSuccessfulSubscription(subscriberId, values) {
      console.log('User got successfully subscribed.');
 
