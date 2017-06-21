@@ -15,10 +15,10 @@ var result = parser.getResult();
 var device;
 alert(result.device.type);
 
-if(result.device.type == "undefined"){
+if(result.device.type === "undefined"){
 device = "desktop";
 }  
-else if(result.device.type == "mobile"){
+else if(result.device.type === "mobile"){
 device = "mobile";
 }
 else{
