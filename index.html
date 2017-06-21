@@ -1,0 +1,84 @@
+<html>
+<title>Segmentation based on Device type Demo</title>
+<head>
+
+<script src="ua-parser.js"></script>
+
+<script type="text/javascript">
+
+var parser = new UAParser();
+//var uastring = "Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+var uastring = navigator.userAgent;
+parser.setUA(uastring);
+var result = parser.getResult();
+var device = result.device.type;
+
+if(pushcrew.isAPIReady) {
+  var sub =  pushcrew.subscriberId; 
+  var push_div = document.getElementById('pushcrew');
+  if(sub === false){
+  push_div.innerHTML = "<p>Pushcrew Subscriber ID: The User is not Subscribed to Push Notifications</p>";
+  }
+  else if (sub === -1){
+  push_div.innerHTML = "<p>Pushcrew Subscriber ID: The User has blocked Push Notifications from your website.</p>";
+  }
+  else{
+  push_div.innerHTML = "<p>Pushcrew Subscriber ID: "+ sub + "</p>";
+    
+  function callbackOnAPIReady() {
+    //now api is ready
+   if(result.device.type == 'undefined') { 
+    _pcq.push(['addSubscriberToSegment', 'desktop', callbackForAddToSegment]);
+   }
+    else if (result.device.type == 'mobile'){
+    _pcq.push(['addSubscriberToSegment', 'mobile', callbackForAddToSegment]);
+   }
+    else {
+     _pcq.push(['addSubscriberToSegment', 'other device', callbackForAddToSegment]);
+   }
+}
+
+function callbackForAddToSegment(response) {
+    if(response === -1) {
+        console.log('User is not a subscriber or has blocked notifications');
+    }
+  
+    if(response === false) {
+        console.log('Segment name provided is not valid. Maximum length of segment name can be 30 chars and it can only contain alphanumeric characters, underscore and dash.');
+    }
+  
+    if(response === true) {
+        console.log('User got added to the segment successfully. Now you may run any code you wish to execute after user gets added to segment successfully');
+    }
+
+  }
+  
+  console.log(pushcrew.subscriberId); // will return something like this if current user is a subscriber '1c5d546172cfb4be65a8d51b047c4804'
+}
+</script> 
+  
+<script type="text/javascript">
+    (function(p,u,s,h){
+        p._pcq=p._pcq||[];
+        p._pcq.push(['_currentTime',Date.now()]);
+        s=u.createElement('script');
+        s.type='text/javascript';
+        s.async=true;
+        s.src='https://cdn.pushcrew.com/js/c2ae4a028feef17a19ae4191c5c7e835.js';
+        h=u.getElementsByTagName('script')[0];
+        h.parentNode.insertBefore(s,h);
+    })(window,document);
+</script>
+  
+</head>
+<body>  
+<h1>Telenor Demo</h1>
+<input type="submit" id="byBtn" value="Get Details" onclick="getDetails()"/>
+<button onclick="_pcq.push(['triggerOptIn',{httpWindowOnly: true}]);">
+GET NOTIFICATIONS
+</button>
+<div id=pushcrew></div>
+<div id="details"></div>
+</body>
+  
+</html>
