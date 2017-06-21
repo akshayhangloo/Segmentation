@@ -13,7 +13,7 @@ parser.setUA(uastring);
 var result = parser.getResult();
 
 var d=result.device.type;
-device = d.toString();
+device = String(d);
 alert(device);
 
 if(device === "undefined"){
