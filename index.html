@@ -5,16 +5,27 @@
 <script src="ua-parser.js"></script>
 
 <script type="text/javascript">
-
+function createSegments(){
 var parser = new UAParser();
 //var uastring = "Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 var uastring = navigator.userAgent;
 parser.setUA(uastring);
 var result = parser.getResult();
-var device = result.device.type;
 
+var device;
+
+if(result.device.type == "undefined"){
+device = "desktop";
+}  
+else if(result.device.type == "mobile"){
+device = "mobile";
+}
+else{
+device = "other-device"
+}
 console.log(device);
-
+  
+}
 </script> 
   
 <script type="text/javascript">
@@ -28,6 +39,9 @@ console.log(device);
         h=u.getElementsByTagName('script')[0];
         h.parentNode.insertBefore(s,h);
     })(window,document);
+  
+createSegments()
+ 
 </script>
   
 </head>
